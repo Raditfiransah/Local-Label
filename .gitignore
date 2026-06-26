@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+backend/venv/
+.env
+
+# Database
+backend/database.db
+backend/database.db-shm
+backend/database.db-wal
+backend/database.db-journal
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp
+/tmp/
+temp/
