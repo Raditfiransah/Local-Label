@@ -34,12 +34,12 @@ Auto Labeler menyelesaikan masalah ini dengan pendekatan **lokal, cerdas, dan ef
 ### Arsitektur
 
 ```
-┌──────────┐     HTTP/SSE      ┌──────────────┐     OpenAI API     ┌────────────┐
-│  React   │ ◄──────────────►  │  FastAPI      │ ◄──────────────►  │  LM Studio  │
-│  Frontend │    localhost:5173 │  Backend      │   localhost:1234  │  / Ollama   │
-└──────────┘                   │  localhost:8000│                   └────────────┘
+┌──────────┐     HTTP/SSE      ┌────────────────┐     OpenAI API    ┌──────────────┐
+│  React   │ ◄──────────────►  │  FastAPI       │ ◄──────────────►  │  LM Studio   │
+│  Frontend│    localhost:5173 │  Backend       │   localhost:1234  │  / Ollama    │
+└──────────┘                   │  localhost:8000│                   └──────────────┘
                                │  + SQLite      │
-                               └──────────────┘
+                               └────────────────┘
 ```
 
 ---
