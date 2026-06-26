@@ -1,37 +1,37 @@
 # Auto Labeler — Local AI
 
-**Auto Labeler** adalah aplikasi web berbasis AI lokal untuk melakukan labeling otomatis pada dataset CSV dalam jumlah besar (10.000+ baris) menggunakan LLM (*Large Language Model*) yang berjalan di mesin sendiri via **LM Studio** atau **Ollama**.
+**Auto Labeler** is a local AI-powered web application for automatic labeling of large CSV datasets (10,000+ rows) using LLMs (*Large Language Models*) running on your own machine via **LM Studio** or **Ollama**.
 
 ---
 
-## Masalah
+## Problem
 
-Labeling data secara manual untuk keperluan *supervised learning* memakan waktu, biaya, dan tenaga yang tidak sedikit. Tim *data science* sering harus:
+Manual data labeling for *supervised learning* is time-consuming, expensive, and labor-intensive. Data science teams often have to:
 
-- Membayar API cloud (OpenAI, dll.) yang mahal untuk ribuan baris data.
-- Membagi data secara manual ke batch-batch kecil karena keterbatasan konteks model.
-- Menangani error satu per satu saat model gagal memproses baris tertentu.
-- Tidak memiliki antarmuka yang nyaman untuk memonitor progres atau memperbaiki hasil labeling.
+- Pay expensive cloud API costs (OpenAI, etc.) for thousands of rows of data.
+- Manually split data into small batches due to model context window limitations.
+- Handle errors one by one when the model fails to process specific rows.
+- Lack a convenient interface to monitor progress or fix labeling results.
 
 ---
 
-## Solusi
+## Solution
 
-Auto Labeler menyelesaikan masalah ini dengan pendekatan **lokal, cerdas, dan efisien**:
+Auto Labeler solves these problems with a **local, smart, and efficient** approach:
 
-| Fitur | Deskripsi |
+| Feature | Description |
 |---|---|
-| **AI Lokal** | Menggunakan LM Studio / Ollama — tidak ada biaya API, data tetap aman di lokal. |
-| **Batch Multi-Text** | Mengirim banyak teks dalam satu prompt → model mengembalikan JSON array. |
-| **Adaptive Batch** | Ukuran batch otomatis menyesuaikan panjang rata-rata teks (30 / 15 / 8 / 4). |
-| **Progressive Split** | Jika batch gagal, dibagi secara progresif (20→10→5→2→1) hingga 5× percobaan. |
-| **Parallel Workers** | Labeling berjalan konkuren dengan beberapa worker via asyncio. |
-| **Real-time SSE** | Progress dikirim ke frontend via *Server-Sent Events* — langsung terlihat. |
-| **Validation & Retry** | Output JSON divalidasi ketat; baris gagal bisa diretry individu atau massal. |
-| **Export Filter** | Ekspor hasil berdasarkan status dan label tertentu. |
-| **Web UI** | React 19 + Vite + Tailwind — upload CSV, atur prompt, monitor progres, edit label. |
+| **Local AI** | Uses LM Studio / Ollama — no API costs, data stays secure on your machine. |
+| **Batch Multi-Text** | Sends multiple texts in a single prompt → model returns a JSON array. |
+| **Adaptive Batch** | Batch size automatically adjusts to average text length (30 / 15 / 8 / 4). |
+| **Progressive Split** | If a batch fails, it splits progressively (20→10→5→2→1) with up to 5 retries. |
+| **Parallel Workers** | Labeling runs concurrently with multiple workers via asyncio. |
+| **Real-time SSE** | Progress streamed to the frontend via *Server-Sent Events* — instantly visible. |
+| **Validation & Retry** | JSON output strictly validated; failed rows can be retried individually or in bulk. |
+| **Export Filter** | Export results filtered by status and specific labels. |
+| **Web UI** | React 19 + Vite + Tailwind — upload CSV, configure prompts, monitor progress, edit labels. |
 
-### Arsitektur
+### Architecture
 
 ```
 ┌──────────┐     HTTP/SSE      ┌────────────────┐     OpenAI API    ┌──────────────┐
@@ -44,15 +44,13 @@ Auto Labeler menyelesaikan masalah ini dengan pendekatan **lokal, cerdas, dan ef
 
 ---
 
-## Cara Penggunaan
+## Usage
 
-### 1. Persiapan
-
-**Prasyarat:**
+### 1. Prerequisites
 
 - Python 3.12+
 - Node.js 18+
-- LM Studio (https://lmstudio.ai) atau Ollama dengan model yang diinginkan
+- LM Studio (https://lmstudio.ai) or Ollama with your desired model
 
 **Install dependencies:**
 
@@ -68,20 +66,20 @@ pip install -r requirements.txt
 cd frontend
 npm install
 
-# Root scripts (opsional)
+# Root scripts (optional)
 npm install
 ```
 
-### 2. Jalankan LM Studio
+### 2. Start LM Studio
 
-1. Buka LM Studio
-2. Load model (misal: `qwen2.5-3b-instruct`)
-3. Start server pada port `1234`
-4. Pastikan endpoint `http://localhost:1234/v1/chat/completions` bisa diakses
+1. Open LM Studio
+2. Load a model (e.g., `qwen2.5-3b-instruct`)
+3. Start the server on port `1234`
+4. Verify the endpoint `http://localhost:1234/v1/chat/completions` is accessible
 
-### 3. Jalankan Aplikasi
+### 3. Run the Application
 
-**Manual:**
+**Manually:**
 
 ```bash
 # Terminal 1 - Backend
@@ -94,7 +92,7 @@ cd frontend
 npm run dev
 ```
 
-**Auto (satu perintah):**
+**Auto (single command):**
 
 ```bash
 # Windows
@@ -105,40 +103,40 @@ chmod +x start-web.sh
 ./start-web.sh
 ```
 
-### 4. Gunakan
+### 4. How to Use
 
-1. Buka `http://localhost:5173` di browser
-2. **Upload CSV** — pilih file CSV (minimal 1 kolom teks)
-3. **Konfigurasi** — pilih provider (`lm-studio`), isi base URL (`http://localhost:1234`), pilih model
-4. **Tulis Prompt** — gunakan `{text}` sebagai placeholder untuk teks yang akan dilabeli
-5. **Benchmark** (opsional) — uji kecepatan model
-6. **Start Labeling** — proses dimulai, progres terlihat real-time
-7. **Review & Edit** — periksa hasil, edit label manual jika perlu, retry baris gagal
-8. **Export** — unduh hasil sebagai CSV
+1. Open `http://localhost:5173` in your browser
+2. **Upload CSV** — select a CSV file (at least 1 text column)
+3. **Configure** — select provider (`lm-studio`), enter base URL (`http://localhost:1234`), pick a model
+4. **Write Prompt** — use `{text}` as placeholder for the text to be labeled
+5. **Benchmark** (optional) — test model speed
+6. **Start Labeling** — process begins, progress visible in real-time
+7. **Review & Edit** — inspect results, manually edit labels if needed, retry failed rows
+8. **Export** — download results as CSV
 
 ### 5. Tips
 
-- Gunakan **model non-reasoning** (misal: `qwen2.5-3b-instruct`) untuk kecepatan maksimal
-- Prompt yang jelas dan spesifik menghasilkan label yang lebih akurat
-- Untuk dataset >100 baris, konfirmasi akan muncul sebelum labeling dimulai
+- Use a **non-reasoning model** (e.g., `qwen2.5-3b-instruct`) for maximum speed
+- Clear and specific prompts produce more accurate labels
+- For datasets >100 rows, a confirmation dialog will appear before labeling starts
 
 ---
 
 ## Credit
 
-Dibuat oleh **Radit** — [@anomalyco](https://github.com/anomalyco)
+Built by **Radit** — [@anomalyco](https://github.com/anomalyco)
 
-Teknologi yang digunakan:
+Powered by:
 
-- **FastAPI** — backend Python modern &异步
-- **React 19 + Vite** — frontend cepat dengan HMR
-- **Tailwind CSS** — styling utility-first
+- **FastAPI** — modern, async Python backend
+- **React 19 + Vite** — fast frontend with HMR
+- **Tailwind CSS** — utility-first styling
 - **TanStack Query** — state management & caching
-- **SQLAlchemy + SQLite** — database ringan tanpa setup
-- **LM Studio** — menjalankan LLM lokal dengan API OpenAI-compatible
-- **Ollama** — alternatif open-source LLM runner
-- **httpx** — HTTP client async untuk komunikasi dengan model
+- **SQLAlchemy + SQLite** — lightweight database, no setup required
+- **LM Studio** — run LLMs locally with an OpenAI-compatible API
+- **Ollama** — open-source alternative LLM runner
+- **httpx** — async HTTP client for model communication
 
 ---
 
-*Auto Labeler dibuat untuk kebutuhan internal dan dirilis sebagai project open-source.*
+*Auto Labeler was built for internal use and released as an open-source project.*
