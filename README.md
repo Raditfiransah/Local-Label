@@ -1,6 +1,6 @@
 # Auto Labeler — Local AI
 
-**Auto Labeler** is a local AI-powered web application for automatic labeling of large CSV datasets (10,000+ rows) using LLMs (*Large Language Models*) running on your own machine via **LM Studio** or **Ollama**.
+**Auto Labeler** is a local AI-powered web application for automatic labeling of large CSV datasets using LLMs (*Large Language Models*) running on your own machine via **LM Studio** or **Ollama**.
 
 ---
 
@@ -124,7 +124,7 @@ chmod +x start-web.sh
 
 ## Credit
 
-Built by **Radit** — [@anomalyco](https://github.com/anomalyco)
+Built by **Radit Firansah** — [@anomalyco](https://github.com/Raditfiransah)
 
 Powered by:
 
