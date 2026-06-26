@@ -124,7 +124,7 @@ chmod +x start-web.sh
 
 ## Credit
 
-Built by **Radit Firansah** — [@anomalyco](https://github.com/Raditfiransah)
+Built by **Radit Firansah** — [@Raditfiransah](https://github.com/Raditfiransah)
 
 Powered by:
 
